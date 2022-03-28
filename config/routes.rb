@@ -1,6 +1,15 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  scope "/api" do
+    #login and logout routes
+    post '/login', to: 'dhwaniapis#login'
+    get '/logout', to: 'dhwaniapis#logout'
+
+    #create and show states
+    scope "/state" do
+      post '/create', to: 'states#create'
+      get '/get-state', to: 'states#index'
+    end
+  end
+  
 end
