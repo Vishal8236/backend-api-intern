@@ -10,6 +10,12 @@ Rails.application.routes.draw do
       post '/create', to: 'states#create'
       get '/get-state', to: 'states#index'
     end
+
+    #create and show districts
+    scope "/district" do
+      post '/create', to: 'districts#create'
+      get '/get-district', to: 'districts#get_district'
+    end
   end
-  
+
 end

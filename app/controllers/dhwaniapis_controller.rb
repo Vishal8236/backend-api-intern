@@ -29,24 +29,33 @@ class DhwaniapisController < ApplicationController
 
     def logout
         #get token by request
-        getToken = params[:token]
+        if request.headers["token"]
 
-        # comapare to this token from database 
-        if User.first.token == getToken
-            msg = {
-                "success": true,
-                "status": 200,
-                "message": "Successfully logged out"
-            }
-            render json: msg
-        else
+            # comapare to this token from database 
+            if User.first.token == request.headers["token"]
+                msg = {
+                    "success": true,
+                    "status": 200,
+                    "message": "Successfully logged out"
+                }
+                render json: msg
+            else
+                msg = {
+                    "success": false,
+                    "status": 401,
+                    "message": "Invalid segment encoding"
+                }
+                render json: msg
+            end
+        else 
             msg = {
                 "success": false,
-                "status": 401,
-                "message": "Invalid segment encoding"
+                "status": 400,
+                "message": "token is required"
             }
             render json: msg
         end
+
     end
 
     private 
