@@ -28,14 +28,10 @@ class StatesController < ApplicationController
     end
     
     def index
-        #check token is exist or not in request url
-        if params[:token]
-            
-            #get token by request
-            getToken = params[:token]
-
+        #check token is exist or not in request url header
+        if request.headers[:token]
             # comapare to this token from database 
-            if User.first.token == getToken
+            if User.first.token == request.headers[:token]
                 @all_state = State.all
                 msg = {
                     "success": true,

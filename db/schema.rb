@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_28_131231) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_28_154625) do
+  create_table "children", force: :cascade do |t|
+    t.string "name"
+    t.integer "sex"
+    t.date "dob"
+    t.string "father_name"
+    t.string "mother_name"
+    t.integer "district_id"
+    t.string "photo"
+  end
+
   create_table "districts", force: :cascade do |t|
     t.string "name"
     t.integer "states_id"

@@ -16,6 +16,10 @@ Rails.application.routes.draw do
       post '/create', to: 'districts#create'
       get '/get-district', to: 'districts#get_district'
     end
+
+    #create child and get data of child routes
+    post '/create-child', to: 'childs#create'
+    get '/get-child', to: 'childs#index'
   end
 
 end

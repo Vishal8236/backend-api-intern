@@ -67,25 +67,46 @@ class DistrictsController < ApplicationController
     end
     
     def get_district
-        if params[:state_id]
-            stateId = params[:state_id]
-            @all_districts = District.where(states_id: stateId)
-            msg= {
-                "success": true,
-                "status": 200,
-                "message": "District Detail",
-                "timestamp": 1648474595,
-                "district": @all_districts
-            }
-            render json: msg
+        #check token is exist or not in request url header
+        if request.headers[:token]
+
+            # comapare to this token from database 
+            if User.first.token == request.headers[:token]
+                if params[:state_id]
+                    stateId = params[:state_id]
+                    @all_districts = District.where(states_id: stateId)
+                    msg= {
+                        "success": true,
+                        "status": 200,
+                        "message": "District Detail",
+                        "timestamp": DateTime.now.to_i,
+                        "district": @all_districts
+                    }
+                    render json: msg
+                else
+                    @all_districts = District.all
+                    msg= {
+                        "success": true,
+                        "status": 200,
+                        "message": "District Detail",
+                        "timestamp": 1648474595,
+                        "district": @all_districts
+                    }
+                    render json: msg
+                end
+            else
+                msg = {
+                    "success": false,
+                    "status": 401,
+                    "message": "Wrong number of segments"
+                }
+                render json: msg
+            end
         else
-            @all_districts = District.all
-            msg= {
-                "success": true,
-                "status": 200,
-                "message": "District Detail",
-                "timestamp": 1648474595,
-                "district": @all_districts
+            msg = {
+                "success": false,
+                "status": 400,
+                "message": "token is required"
             }
             render json: msg
         end
